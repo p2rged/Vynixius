@@ -5,6 +5,7 @@
 ]]
 
 -- PlaceId check removed for lobby compatibility
+print("[Vynixius] Script starting...")
 
 local function Base64Decode(data)
     local b = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
@@ -28,6 +29,7 @@ local function LoadB64Script(url)
     return loadstring(decoded)()
 end
 
+print("[Vynixius] Attempting to load UI library...")
 local success, Library = pcall(function()
     return loadstring(game:HttpGet("https://raw.githubusercontent.com/deividcomsono/Obsidian/main/Library.lua"))()
 end)
@@ -35,6 +37,7 @@ if not success or not Library then
     warn("[Vynixius] Failed to load UI:", Library)
     return
 end
+print("[Vynixius] UI library loaded successfully")
 
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
@@ -48,6 +51,7 @@ local TweenService = game:GetService("TweenService")
 
 local LocalPlayer = Players.LocalPlayer
 local CurrentCamera = Workspace.CurrentCamera
+print("[Vynixius] Waiting for game data...")
 local GameData = ReplicatedStorage:WaitForChild("GameData", 10)
 local Bricks = ReplicatedStorage:WaitForChild("Bricks", 10)
 local CurrentRooms = Workspace:WaitForChild("CurrentRooms", 10)
@@ -56,6 +60,7 @@ if not GameData or not Bricks or not CurrentRooms then
     warn("[Vynixius] Failed to load game data. Make sure you're in DOORS!")
     return
 end
+print("[Vynixius] Game data loaded")
 
 local Remotes = {
     Screech = Bricks:WaitForChild("Screech", 5),
