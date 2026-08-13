@@ -54,25 +54,36 @@ local CurrentCamera = Workspace.CurrentCamera
 print("[Vynixius] PlaceId: " .. tostring(game.PlaceId))
 print("[Vynixius] GameId: " .. tostring(game.GameId))
 
-local rsKids = ReplicatedStorage:GetChildren()
-print("[Vynixius] ReplicatedStorage has " .. #rsKids .. " children")
-for i, v in ipairs(rsKids) do
-    if i <= 20 then
-        print("[Vynixius]   RS[" .. i .. "] = " .. v.Name .. " (" .. v.ClassName .. ")")
-    end
+-- Try finding game data in different ways
+local GameData = ReplicatedStorage:FindFirstChild("GameData")
+local Bricks = ReplicatedStorage:FindFirstChild("Bricks")
+local CurrentRooms = Workspace:FindFirstChild("CurrentRooms")
+
+if GameData then
+    print("[Vynixius] Found GameData in ReplicatedStorage")
+else
+    print("[Vynixius] GameData NOT found in ReplicatedStorage")
+    -- Check if it's somewhere else
+    local alt = ReplicatedStorage:FindFirstChildWhichIsA("Folder")
+    if alt then print("[Vynixius] First RS folder: " .. alt.Name) end
 end
 
-local wsKids = Workspace:GetChildren()
-print("[Vynixius] Workspace has " .. #wsKids .. " children")
-for i, v in ipairs(wsKids) do
-    if i <= 20 then
-        print("[Vynixius]   WS[" .. i .. "] = " .. v.Name .. " (" .. v.ClassName .. ")")
-    end
+if Bricks then
+    print("[Vynixius] Found Bricks in ReplicatedStorage")
+else
+    print("[Vynixius] Bricks NOT found in ReplicatedStorage")
 end
 
-local GameData = ReplicatedStorage:WaitForChild("GameData", 10)
-local Bricks = ReplicatedStorage:WaitForChild("Bricks", 10)
-local CurrentRooms = Workspace:WaitForChild("CurrentRooms", 10)
+if CurrentRooms then
+    print("[Vynixius] Found CurrentRooms in Workspace")
+else
+    print("[Vynixius] CurrentRooms NOT found in Workspace")
+end
+
+-- Also try WaitForChild with longer timeout
+if not GameData then GameData = ReplicatedStorage:WaitForChild("GameData", 20) end
+if not Bricks then Bricks = ReplicatedStorage:WaitForChild("Bricks", 20) end
+if not CurrentRooms then CurrentRooms = Workspace:WaitForChild("CurrentRooms", 20) end
 
 if not GameData or not Bricks or not CurrentRooms then
     warn("[Vynixius] Failed to load game data. Make sure you're in DOORS!")
