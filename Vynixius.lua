@@ -51,17 +51,8 @@ local TweenService = game:GetService("TweenService")
 
 local LocalPlayer = Players.LocalPlayer
 local CurrentCamera = Workspace.CurrentCamera
-print("[Vynixius] Waiting for game data...")
-print("[Vynixius] ReplicatedStorage children:")
-for _, v in ipairs(ReplicatedStorage:GetChildren()) do
-    print("  -", v.Name, v.ClassName)
-end
-print("[Vynixius] Workspace children:")
-for _, v in ipairs(Workspace:GetChildren()) do
-    print("  -", v.Name, v.ClassName)
-end
-print("[Vynixius] PlaceId:", game.PlaceId)
-print("[Vynixius] GameId:", game.GameId)
+print("[Vynixius] PlaceId: " .. tostring(game.PlaceId))
+print("[Vynixius] GameId: " .. tostring(game.GameId))
 
 local GameData = ReplicatedStorage:WaitForChild("GameData", 10)
 local Bricks = ReplicatedStorage:WaitForChild("Bricks", 10)
