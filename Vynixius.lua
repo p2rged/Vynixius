@@ -54,39 +54,47 @@ local CurrentCamera = Workspace.CurrentCamera
 print("[Vynixius] PlaceId: " .. tostring(game.PlaceId))
 print("[Vynixius] GameId: " .. tostring(game.GameId))
 
--- Try finding game data in different ways
 local GameData = ReplicatedStorage:FindFirstChild("GameData")
 local Bricks = ReplicatedStorage:FindFirstChild("Bricks")
 local CurrentRooms = Workspace:FindFirstChild("CurrentRooms")
 
 if GameData then
-    print("[Vynixius] Found GameData in ReplicatedStorage")
+    print("[Vynixius] Found GameData")
 else
-    print("[Vynixius] GameData NOT found in ReplicatedStorage")
-    -- Check if it's somewhere else
-    local alt = ReplicatedStorage:FindFirstChildWhichIsA("Folder")
-    if alt then print("[Vynixius] First RS folder: " .. alt.Name) end
+    print("[Vynixius] GameData NOT found")
 end
 
 if Bricks then
-    print("[Vynixius] Found Bricks in ReplicatedStorage")
+    print("[Vynixius] Found Bricks")
 else
-    print("[Vynixius] Bricks NOT found in ReplicatedStorage")
+    print("[Vynixius] Bricks NOT found - searching for remotes...")
+    -- Search for Screech remote specifically
+    local screech = ReplicatedStorage:FindFirstChild("Screech", true)
+    if screech then
+        print("[Vynixius] Found Screech at: " .. screech:GetFullName())
+    else
+        print("[Vynixius] Screech not found anywhere")
+    end
+    -- List all folders in ReplicatedStorage
+    for _, v in ipairs(ReplicatedStorage:GetChildren()) do
+        if v:IsA("Folder") or v:IsA("Model") then
+            warn("[Vynixius] RS folder: " .. v.Name)
+        end
+    end
 end
 
 if CurrentRooms then
-    print("[Vynixius] Found CurrentRooms in Workspace")
+    print("[Vynixius] Found CurrentRooms")
 else
-    print("[Vynixius] CurrentRooms NOT found in Workspace")
+    print("[Vynixius] CurrentRooms NOT found")
 end
 
--- Also try WaitForChild with longer timeout
-if not GameData then GameData = ReplicatedStorage:WaitForChild("GameData", 20) end
 if not Bricks then Bricks = ReplicatedStorage:WaitForChild("Bricks", 20) end
+if not GameData then GameData = ReplicatedStorage:WaitForChild("GameData", 20) end
 if not CurrentRooms then CurrentRooms = Workspace:WaitForChild("CurrentRooms", 20) end
 
 if not GameData or not Bricks or not CurrentRooms then
-    warn("[Vynixius] Failed to load game data. Make sure you're in DOORS!")
+    warn("[Vynixius] Failed to load game data!")
     return
 end
 print("[Vynixius] Game data loaded")
