@@ -54,6 +54,16 @@ local CurrentCamera = Workspace.CurrentCamera
 print("[Vynixius] PlaceId: " .. tostring(game.PlaceId))
 print("[Vynixius] GameId: " .. tostring(game.GameId))
 
+print("[Vynixius] ReplicatedStorage children:")
+for _, v in ipairs(ReplicatedStorage:GetChildren()) do
+    print("  - " .. v.Name)
+end
+
+print("[Vynixius] Workspace children:")
+for _, v in ipairs(Workspace:GetChildren()) do
+    print("  - " .. v.Name)
+end
+
 local GameData = ReplicatedStorage:WaitForChild("GameData", 10)
 local Bricks = ReplicatedStorage:WaitForChild("Bricks", 10)
 local CurrentRooms = Workspace:WaitForChild("CurrentRooms", 10)
