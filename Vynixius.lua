@@ -54,14 +54,20 @@ local CurrentCamera = Workspace.CurrentCamera
 print("[Vynixius] PlaceId: " .. tostring(game.PlaceId))
 print("[Vynixius] GameId: " .. tostring(game.GameId))
 
-print("[Vynixius] ReplicatedStorage children:")
-for _, v in ipairs(ReplicatedStorage:GetChildren()) do
-    print("  - " .. v.Name)
+local rsKids = ReplicatedStorage:GetChildren()
+print("[Vynixius] ReplicatedStorage has " .. #rsKids .. " children")
+for i, v in ipairs(rsKids) do
+    if i <= 20 then
+        print("[Vynixius]   RS[" .. i .. "] = " .. v.Name .. " (" .. v.ClassName .. ")")
+    end
 end
 
-print("[Vynixius] Workspace children:")
-for _, v in ipairs(Workspace:GetChildren()) do
-    print("  - " .. v.Name)
+local wsKids = Workspace:GetChildren()
+print("[Vynixius] Workspace has " .. #wsKids .. " children")
+for i, v in ipairs(wsKids) do
+    if i <= 20 then
+        print("[Vynixius]   WS[" .. i .. "] = " .. v.Name .. " (" .. v.ClassName .. ")")
+    end
 end
 
 local GameData = ReplicatedStorage:WaitForChild("GameData", 10)
